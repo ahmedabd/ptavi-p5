@@ -86,24 +86,37 @@ Se ha capturado una sesión SIP (archivo sip.cap.gz), que se puede abrir con Wir
 
 9. Fijémonos en las tramas siguientes a la número 46:
  ** ¿Se registra con éxito en el primer intento?
+        No se registra con éxito ya que en la trama nº 50 observamos un mensaje de error: 401 Unauthoriez ya que el cliente se tiene que identificar primero antes de querer registrarse.
  ** ¿Cómo sabemos si el registro se ha realizado correctamente o no?
+        El registro se ha realizado correctamente cuando nuestro servidor nos envía un mensaje de exito: 200 OK.
  ** ¿Podrías identificar las diferencias entre el primer intento y el segundo de registro? (fíjate en el tamaño de los paquetes y mira a qué se debe el cambio)
+        En el primer intento se envían 523 bytes, el servidor le envía al cliente una clave mediante el campo 'nonce' para que en el próximo intento de registro el cliente se identifique, por eso en el segundo intento de registro se envían 712 bytes.
  ** ¿Cuánto es el valor del tiempo de expiración de la sesión? Indica las unidades.
+        Nos dirigimos a la pestaña de SIP, después a Message Header y en el campo Expires aparece el tiempo de expiración, en este caso, 3600 segundos.
 
 
 10. Una vez registrados, podemos efectuar una llamada. Vamos a probar con el servicio de eco de Ekiga que nos permite comprobar si nos hemos conectado correctamente. El servicio de eco tiene la dirección sip:500@ekiga.net. Veamos el INVITE de cerca.
  ** ¿Puede verse el nombre del que efectúa la llamada, así como su dirección SIP?
+        En la trama 84 observamos que en Message Header, en el campo From, podemos observar quien efectuó la llamada y la dirección SIP. (Gregorio Robles, SIP:grex@ekiga.net)
  ** ¿Qué es lo que contiene el cuerpo de la trama? ¿En qué formato/protocolo está?
+            El cuerpo de la trama lo podemos observar en SIP, Message Header, Message Body. Observamos que utiliza el protocolo SDP, también podemos ver información de la conexión e información de diferentes atributos.
  ** ¿Tiene éxito el primer intento? ¿Cómo lo sabes?
+        No tiene éxito ya que en la trama 85 observamos un mensaje de error: 407 Proxy Authentication Required
  ** ¿En qué se diferencia el segundo INVITE más abajo del primero? ¿A qué crees que se debe esto?
+        Se direferencian en el tamaño de bytes que se envían, en el segundo INVITE se envían 1181 bytes, ya que en el segundo INVITE se tiene que enviar un nuevo campo: proxy-authorization para que se pueda establecer la conexión.
 
 
 11. Una vez conectado, estudia el intercambio de tramas.
  ** ¿Qué protocolo(s) se utiliza(n)? ¿Para qué sirven estos protocolos?
+        Se utilizan: RTP, H.261 Y RTCP. RTP: Protocolo de nivel de sesión utilizado para la transmisión de información en tiempo real. RTCP: Protocolo que proporciona información de control asociado con un flujo de datos RTP para una aplicación multimedia.
  ** ¿Cuál es el tamaño de paquete de los mismos?
+        RTP: 214 bytes, RTCP: 102 bytes.
  ** ¿Se utilizan bits de padding?
+        No se utilizan, en el campo Padding podemos observar lo siguiente: (Padding: False)
  ** ¿Cuál es la periodicidad de los paquetes que se envían?
+        La periodicidad la observamos con el campo timestamp. Al observar un paquete G.711, la velocidad con la que se transmite es de 64 Kb/s y su timestamp es de 160. 64000/(8*160) = 50 paquetes/segundos, T = 1/50 = 0.02 segundos.
  ** ¿Cuántos bits/segundo estamos enviando?
+        Estamos enviando 64000 bits/segundo.
 
 
 
