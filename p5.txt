@@ -267,18 +267,37 @@ Captura una sesión SIP de una conversación con el número SIP sip:9999@qxip.ne
 
 17. Observa las diferencias en el inicio de la conversación entre el entorno del laboratorio y el del ejercicio anterior:
  ** ¿Es necesario el uso de DNS y STUN? ¿Por qué?
+
+        Se utiliza DNS ya que es el protocolo que se encargar de dar nombres de dominio a direcciones IPs.
+        No se utiliza STUN ya que no estamos detras de un router NAT, en el caso de estar realizando la práctica en los laboratorios ya que las direcciones IPs son públicas.
+
  ** ¿Son diferentes el registro y la descripción de la sesión?
+
+        No se aprecia ninguna diferencia.
 
 
 18. Identifica las diferencias existentes entre esta conversación y la conversación anterior:
  ** ¿Cuántos flujos tenemos?
+        
+        Existen dos flujos de audios codificados con G.711
+
  ** ¿Cuál es su periodicidad?
+
+        La preiodicidad es la misma ya que el timestamp es de 160.
+
  ** ¿Cuánto es el valor máximo del delta y los valores medios y máximo del jitter?
+
+        El valor máximo del delta para el primer flujo es de 45.01, su valor medio del jitter es de 4.86 y su valor máximo de jitter es de 7.40.
+        El valor máximo del delta para el segundo flujo es de 30.53, su valor medio del jitter es de 4.68 y su valor máximo de jitter es de 7.12.
+
  ** ¿Podrías reproducir la conversación desde Wireshark? ¿Cómo? Comprueba que poniendo un valor demasiado pequeño para el buffer de jitter, la conversación puede no tener la calidad necesaria.
+
+        Si podriamos reproducir la conversación, nos dirigimos a Telephony,VoIP Calls, seleccionamos nuestro flujo, Player y marcamos View as time of day, y por último reproducir.
+
  ** ¿Sabrías decir qué tipo de servicio ofrece sip:9999@qxip.net?
-
-
-
+        
+        sip:9999@qxip.net nos ofrece servicios de audios, especificamente canciones.
+            
 [Al terminar el ejercicio es recomendable hacer commit de los ficheros modificados]
 
 19. Filtra por los paquetes SIP de la captura y guarda únicamente los paquetes SIP como sip.libpcap. Abre el fichero guardado para cerciorarte de que lo has hecho bien. Deberás guardarlo en un archivo de nombre p5.libpcap y añadirlo al repositorio.
